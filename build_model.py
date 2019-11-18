@@ -15,16 +15,16 @@ model_output_dir = model_name
 
 sbml_importer = amici.SbmlImporter(sbml_file)
 
+petab.sbml.constant_species_to_parameters(sbml_importer.sbml)
+
+libsbml.writeSBMLToFile(sbml_importer.sbml_doc,
+                        'CS_Signalling_ERBB_RAS_AKT_modified.xml')
+
 # extract observable definition from sbml
 observables = amici.assignmentRules2observables(
     sbml_importer.sbml,
     filter_function=lambda p: p.getName() in ['observable_proliferation']
 )
-
-petab.sbml.constant_species_to_parameters(sbml_importer.sbml)
-
-libsbml.writeSBMLToFile(sbml_importer.sbml_doc,
-                        'CS_Signalling_ERBB_RAS_AKT_modified.xml')
 
 condition_table = pd.read_csv('conditions_petab.tsv', sep='\t')
 
