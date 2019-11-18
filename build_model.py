@@ -5,8 +5,6 @@ import os
 import sys
 import pandas as pd
 import petab.sbml
-import numpy as np
-import matplotlib.pyplot as plt
 
 # SBML model we want to import
 sbml_file = 'CS_Signalling_ERBB_RAS_AKT_petab.xml'
@@ -24,6 +22,9 @@ observables = amici.assignmentRules2observables(
 )
 
 petab.sbml.constant_species_to_parameters(sbml_importer.sbml)
+
+libsbml.writeSBMLToFile(sbml_importer.sbml_doc,
+                        'CS_Signalling_ERBB_RAS_AKT_modified.xml')
 
 condition_table = pd.read_csv('conditions_petab.tsv', sep='\t')
 
